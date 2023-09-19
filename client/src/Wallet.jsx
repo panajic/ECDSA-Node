@@ -8,8 +8,7 @@ function Wallet({ address, setAddress, balance, setBalance, privateKey, setPriva
   async function onChange(evt) {
     const address = evt.target.value;
 
-    /** if you want to use private key as wallet address you can use with code below.
-  
+    /*if you want to use private key as wallet address you can use with code below.  
       const privateKey = evt.target.value;
       const publicKey = secp.getPublicKey(privateKey);
       const addressNotHex = keccak256(publicKey.slice(1)).slice(-20);

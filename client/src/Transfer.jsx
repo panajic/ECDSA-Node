@@ -15,7 +15,7 @@ function Transfer({ address, setBalance, privateKey }) {
 
   const setValue = (setter) => (evt) => setter(evt.target.value);
 
-  // write a function that creates a transaction hash and signs the transaction.
+  // Function that creates a transaction hash and signs the transaction.
   async function hashAndSign() {
     try{
       const transactionMessage = {
@@ -24,15 +24,15 @@ function Transfer({ address, setBalance, privateKey }) {
         recipient: recipient
       }
 
-    // hash the transaction. You have to change the message to string first, then byte. After that hash it.
+    // Hash the transaction. You have to change the message to string first, then byte. After that hash it.
     const hashedMessage = keccak256(utf8ToBytes(JSON.stringify(transactionMessage)));
     const hexMessage = toHex(hashedMessage);
 
-    //Get the hex version of hashed message. We will use it when we want to recover the public key from signature (in index.js).
+    // Get the hex version of hashed message. We will use it when we want to recover the public key from signature (in index.js).
     setHashedMessage(hexMessage);
 
     /*
-    sign the message with private key. it will return an array with two elements.
+    Sign the message with private key. It will return an array with two elements.
     First one is signature. Get the hex version of it.
     Second one is recovery bit.
     */
@@ -46,13 +46,11 @@ function Transfer({ address, setBalance, privateKey }) {
       console.log(error);
       alert(error);
     }
-
   }
 
-
   /* 
-  create the transfer function. Sender-recipient and amount is for transaction.
-  signature, recoverybit and hexmessage are for recovering the public key and verifying.
+  Create the transfer function. Sender-recipient and amount is for transaction.
+  Signature, recoverybit and hexmessage are for recovering the public key and verifying.
   */
   async function transfer(evt) {
     evt.preventDefault();
@@ -74,7 +72,7 @@ function Transfer({ address, setBalance, privateKey }) {
     }
   }
 
-  // to complete the transaction sign it first. Then get the hash and signature to complete it.
+  // To complete the transaction sign it first. Then get the hash and signature to complete it.
   return (
     <form className="container transfer" onSubmit={transfer}>
       <h1>Send Transaction</h1>
@@ -99,10 +97,13 @@ function Transfer({ address, setBalance, privateKey }) {
 
       <input type="button" className="button" value="Sign the transaction" onClick={hashAndSign}></input>
 
-      <div>Your transaction hash: {hexMessage}</div>
-      <div>Your signature: {signature.slice(0,4)}...{signature.slice(-4)}</div>
-      <div>Your recoveryBit: {recoveryBit}</div>
+      <label>
+        Your transaction hash: {hexMessage.slice(0,4)}...{hexMessage.slice(-4)}
+      </label>
 
+      <label>
+        Your signature: {signature.slice(0,4)}...{signature.slice(-4)}
+      </label>
 
       <input type="submit" className="button" value="Transfer" />
     </form>

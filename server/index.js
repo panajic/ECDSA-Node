@@ -16,7 +16,7 @@ const balances = {
   "0x5347afc0a7847364a9fc858359333dd17023611a": 75,
 };
 
-//Because of this app is not connecting to a wallet, create an object with public key/private key pairs.
+// Because of this app is not connecting to a wallet, create an object with public key/private key pairs.
 const privateKeys = {
   "0xf3f218c871f05d38518550163dc07096a3e1a14f": "b28b85da26c609a8c420e59b7037ac7a49bffd02d0ef0249f0cbb7cba4c27254",
   "0xc5ea29cddaebdcadb5e1335b6dd8a6b2209cef63": "38c08445531d63b8fbd1fa95c3cb023875b6b4c94931d6c5aeaee39a7cde00f7",
@@ -36,7 +36,7 @@ app.post("/send", async (req, res) => {
 
   const { signature, hexMessage, recoveryBit, sender, recipient, amount } = req.body;
 
-  // get signature, hash and recovery bit from client-sideand recover the address from signature
+  // Get signature, hash and recovery bit from client-sideand recover the address from signature.
 
   const signaturePublicKey = secp.recoverPublicKey(hexMessage, signature, recoveryBit);
   const signatureAddressNotHex = keccak256(signaturePublicKey.slice(1)).slice(-20);
@@ -50,7 +50,7 @@ app.post("/send", async (req, res) => {
     res.status(400).send({ message: "Not enough funds!" });
   } 
   else if (signatureAddress !== sender) {
-    res.status(400).send({message: "You are not the person!"})
+    res.status(400).send({message: "You are not the person!"});
   }
   else {
     balances[sender] -= amount;
